@@ -1,5 +1,10 @@
 const HomePage = () => {
-    return <h1>Home page</h1>
+    return (
+    <div>
+        <h1>FoodSwipe</h1>
+        <h2>Upptäck ditt nästa favoritrecept</h2>
+    </div>
+)
 }
 
 export default HomePage; 
