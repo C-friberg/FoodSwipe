@@ -11,6 +11,6 @@ Men i framtiden så vill jag även att man ska kunna ställa in saker såsom pro
 Hur startar man igång projektet? 
 
 
-För att starta denna sida, se till så du navigerar till mappen "FoodSwipe", observera att det finns två stycken mappar med samma namn, men du vill navigera till /FoodSwipe/Foodwipe. För att starta applikationen så går du till 'Terminal' -> 'New Terminal'. När terminalen öppnar sig så skriver du in 'npm run dev' och klistrar in localhost som visas in i din sökmotor (alternativt ctrl + klick). 
+För att starta denna sida, se till så du navigerar till mappen "FoodSwipe", observera att det finns två stycken mappar med samma namn, men du vill navigera till /FoodSwipe/FoodSwipe. För att starta applikationen så går du till 'Terminal' -> 'New Terminal'. När terminalen öppnar sig så skriver du in 'npm run dev' och klistrar in localhost som visas in i din sökmotor (alternativt ctrl + klick). 
 
 Just nu finns det bara information om projektet. Men jag kommer uppdatera denna texten under projektets gång om fler instruktioner behövs gå igenom. 
