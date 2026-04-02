@@ -2,7 +2,9 @@ import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import NavBar from './components/NavBar'
 import HomePage from './components/Home'
-import AboutPage from './components/About'
+import DescriptionPage from './components/About'
+import ContactPage from './components/Contact'
+import Footer from './components/Footer'
 
 function App() {
 
@@ -10,11 +12,14 @@ function App() {
 
     <div>
       <NavBar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/about" element={<AboutPage />} />
-      </Routes>
+      <main>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<DescriptionPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Routes>
+      </main>
+      <Footer />
     </div>
   )
 };

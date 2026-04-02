@@ -1,73 +1,16 @@
-# React + TypeScript + Vite
+Beskriv projektet och hur det ska startas och användas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Kort beskrivning
 
-Currently, two official plugins are available:
+Detta är ett projekt som skrivs med hjälp av React. Projektet är en recept applikation som ska presentera användaren med olika recept. Till en början så är det tänkt att hämta dessa recept från öppna och allmäna API'er. Men man ska även kunna lägga in sina egna recept för andra användare att hitta. Ett recept åt gången kommer presenteras för användare, sveper man höger så sparar man det, och sveper man vänster så avfärdas det. 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Syftet är att underlätta användarens dag genom att inte behöva fundera vad man ska äta. Användaren ska kunna ställa in preferenser så som t.ex allergier, tillgängliga ingredienser i hemmet, kostnad osv. 
+Men i framtiden så vill jag även att man ska kunna ställa in saker såsom proteinrik mat för den som tränar osv. 
 
-## React Compiler
+--------------------------------------------------------------------------------------------------------------------------------
+Hur startar man igång projektet? 
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+För att starta denna sida, se till så du navigerar till mappen "FoodSwipe", observera att det finns två stycken mappar med samma namn, men du vill navigera till /FoodSwipe/FoodSwipe. För att starta applikationen så går du till 'Terminal' -> 'New Terminal'. När terminalen öppnar sig så skriver du in 'npm run dev' och klistrar in localhost som visas in i din sökmotor (alternativt ctrl + klick). 
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Just nu finns det bara information om projektet. Men jag kommer uppdatera denna texten under projektets gång om fler instruktioner behövs gå igenom. 
