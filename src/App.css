@@ -28,9 +28,10 @@
 }
  */
 
- body {
+body {
   margin: 0;
   font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #fffaf7, #ffe8dc);
 }
 
 nav {
@@ -39,8 +40,17 @@ nav {
   padding: 16px;
 }
 
+nav a {
+  text-decoration: none;
+}
+
 main {
-  padding: 20px;
+  background-color: var(--bg-main);
+  padding: 40px 20px;
+  margin: 40px auto;
+  max-width: 800px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
 footer {
@@ -55,4 +65,10 @@ footer {
   margin: 20px auto;
   border-radius: 30px;
   border: 8px solid black;
+}
+
+:root {
+  --bg-main: #fff7f3; 
+  --accent: #ffb38a; 
+  -text: #333; 
 }
