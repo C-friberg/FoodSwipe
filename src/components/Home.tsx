@@ -1,7 +1,11 @@
+import { Navigate, useNavigate } from "react-router-dom";
+
 const HomePage = () => {
+    const navigate = useNavigate(); 
     return (
     <div>
         <h1>FoodSwipe</h1>
+        <button className = "navBtn" onClick={() => navigate("/swipe")}>Börja Swipea på recept här</button>
         <h2>Upptäck ditt nästa favoritrecept</h2>
         <p>Ladda ner appen nu på App Store eller Google Play</p>
         <img src="/src/assets/demo.png" className = "demo-img" ></img>

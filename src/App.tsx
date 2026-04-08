@@ -5,6 +5,7 @@ import HomePage from './components/Home'
 import DescriptionPage from './components/About'
 import ContactPage from './components/Contact'
 import Footer from './components/Footer'
+import SwipePage from './components/Swipe'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<DescriptionPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/swipe" element={<SwipePage />} />
         </Routes>
       </main>
       <Footer />
