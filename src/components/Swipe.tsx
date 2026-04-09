@@ -1,10 +1,23 @@
 import { useState } from "react";
-import { recipes } from "../data/recipes";
+import { recipes, type Recipe } from "../data/recipes";
 
 const SwipePage = () => {
     const [currentIndex, setCurrentIndex] = useState(0)
 
     const currentRecipe = recipes[currentIndex]
+
+    const handleSave  = () => {
+        const savedRecipes: Recipe[] = JSON.parse(localStorage.getItem("savedRecipes") ||"[]")
+
+        const alreadySaved = savedRecipes.find((recipe) => recipe.id === currentRecipe.id)
+
+        if (!alreadySaved) {
+            savedRecipes.push(currentRecipe)
+            localStorage.setItem("savedRecipes", JSON.stringify(savedRecipes))
+        }
+
+        handleNext()
+    }
 
     const handleNext = () => {
         if (currentIndex < recipes.length - 1) {
@@ -33,7 +46,7 @@ const SwipePage = () => {
                 <p>{currentRecipe.isVegan ? "Veganskt" : "Ej veganskt"}</p>
 
                 <button onClick={handleNext}>Nästa recept</button>
-                <button>Spara</button>
+                <button onClick={handleSave}>Spara</button>
             </div>
         </div>
     )

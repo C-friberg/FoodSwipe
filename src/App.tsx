@@ -6,6 +6,7 @@ import DescriptionPage from './components/About'
 import ContactPage from './components/Contact'
 import Footer from './components/Footer'
 import SwipePage from './components/Swipe'
+import RecipesPage from './components/SavedRecipes'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/about" element={<DescriptionPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/swipe" element={<SwipePage />} />
+          <Route path="/recipes" element ={<RecipesPage />} />
         </Routes>
       </main>
       <Footer />
