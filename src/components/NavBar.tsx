@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 
-const NavBar = () => {
+type NavBarProps = {
+    savedCount: number
+}
+
+const NavBar = ({savedCount}: NavBarProps) => {
     return (
         <header>
             <nav>
@@ -8,7 +12,7 @@ const NavBar = () => {
                 <Link to="/about">Beskrivning</Link>
                 <Link to="/contact">Kontakt</Link>
                 <Link to="/swipe">Swipe</Link> 
-                <Link to="/recipes">Mina recept</Link> 
+                <Link to="/recipes">Mina recept ({savedCount})</Link> 
             </nav>
         </header>
     )
