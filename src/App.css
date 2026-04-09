@@ -121,3 +121,21 @@ footer {
     transform: translateY(0);
   }
 }
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px;
+  background-color: #fff7f3;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+nav a:hover {
+  color: #ffb38a;
+}
