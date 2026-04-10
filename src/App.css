@@ -11,7 +11,7 @@ body {
   color: var(--text);
 }
 
-h1, h2 {
+h1, h2, p {
   text-align: center;
 }
 
@@ -62,17 +62,21 @@ footer {
   border: 8px solid black;
 }
 
-.navBtn {
+.navBtn, .summary-btn {
   height: 30px;
   border-radius: 20px;
   border: none;
   padding: 0 14px;
   cursor: pointer;
+  text-align: center;
+  display: block;
+  margin: 20px auto;
 }
 
 .navBtn:hover {
   background-color: lightgray;
 }
+
 
 .recipe-card {
   max-width: 350px;
