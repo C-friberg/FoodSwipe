@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import type { Recipe } from "../data/recipes";
-import { Navigate, useNavigate } from "react-router-dom";
 
 const RecipesPage = () => {
     const [savedRecipes, setSavedRecipes] = useState<Recipe[]>([])
@@ -16,7 +15,6 @@ const RecipesPage = () => {
             <div>
                 <h1>Sparade recept</h1>
                 <p>Du har inga sparade recept</p>
-                {/* <button className = "navBtn" onClick={() => navigate("/swipe")}>Börja Swipea på recept här</button> */}
             </div>
         )
     }
