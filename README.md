@@ -15,6 +15,9 @@ För att starta denna sida, se till så du navigerar till mappen "FoodSwipe", ob
 
 Just nu finns det bara information om projektet. Men jag kommer uppdatera denna texten under projektets gång om fler instruktioner behövs gå igenom.
 
+OBS 2026-04-10
+Den aktuella koden ligger på branch swipefeature så för att starta koden, se till så att hämta koden från branch "swipefeature". Resten av stegen är demsamma. 
+
 ---
 
 Deployad version finns här:
