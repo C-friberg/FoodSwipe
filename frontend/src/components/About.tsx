@@ -28,12 +28,12 @@ const DescriptionPage = () => {
         </p>
         <p>Se min figma här: <a href={figmaLink} target = "_blank">Figma</a></p>
         <p>Se sammanfattning av affärsplanen här:  </p>
-        <button onClick = {() => setShowSummary(true)}>Affärsplan </button>
+        <button className="summary-btn" onClick = {() => setShowSummary(true)}>Affärsplan </button>
         </>
         ) : (
             <>
                 <Summary />
-                <button onClick = {() => setShowSummary(false)}>
+                <button className="summary-btn" onClick = {() => setShowSummary(false)}>
                     Tillbaka
                 </button>
             </>
