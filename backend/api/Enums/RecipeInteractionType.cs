@@ -2,7 +2,9 @@ namespace api.Enums
 {
     public enum RecipeInteractionType
     {
-        SwipedAway = 1,
-        Rated = 2
+        SwipedYes = 1,
+        SwipedNo = 2,
+        Rated = 3,
+        Saved = 4
     }
 }
