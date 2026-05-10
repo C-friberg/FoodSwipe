@@ -1,13 +1,15 @@
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import NavBar from './components/NavBar'
-import HomePage from './components/Home'
-import DescriptionPage from './components/About'
+import HomePage from './pages/Home'
+import DescriptionPage from './pages/About'
 import ContactPage from './components/Contact'
 import Footer from './components/Footer'
-import SwipePage from './components/Swipe'
-import RecipesPage from './components/SavedRecipes'
+import SwipePage from './pages/Swipe'
+import RecipesPage from './pages/SavedRecipes'
 import { useEffect, useState } from 'react'
+import RecipeFeedPage from './pages/temp'
+import CreateRecipePage from "./pages/CreateRecipePage"
 
 function App() {
   const [savedCount, setSavedCount] = useState(0)
@@ -28,6 +30,8 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/swipe" element={<SwipePage setSavedCount={setSavedCount} />} />
           <Route path="/recipes" element ={<RecipesPage />} />
+          <Route path="/feed" element={<RecipeFeedPage />} />
+          <Route path="/recipes/create" element={<CreateRecipePage />} />
         </Routes>
       </main>
       <Footer />

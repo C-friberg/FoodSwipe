@@ -13,6 +13,8 @@ const NavBar = ({savedCount}: NavBarProps) => {
                 <Link to="/contact">Kontakt</Link>
                 <Link to="/swipe">Swipe</Link> 
                 <Link to="/recipes">Mina recept ({savedCount})</Link> 
+                <Link to="/feed">Användar recept</Link>
+                <Link to="/recipes/create">Skapa recept</Link>
             </nav>
         </header>
     )
