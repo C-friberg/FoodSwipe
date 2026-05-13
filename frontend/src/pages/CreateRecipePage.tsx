@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createRecipe } from "../api/recipeApi";
 import { RecipeType, CostType } from "../types/recipe";
 import type { RecipeType as RecipeTypeValue, CostType as CostTypeValue } from "../types/recipe";
+import "./CreateRecipePage.css";
 
 export default function CreateRecipePage() {
   const [name, setName] = useState("");
@@ -39,31 +40,36 @@ export default function CreateRecipePage() {
   }
 
   return (
-    <main>
-      <h1>Lägg upp recept</h1>
+    <main className="create-recipe-page">
+  <section className="create-recipe-card">
+    <h1>Lägg upp recept</h1>
+    <p className="create-recipe-intro">
+      Dela ett recept som andra kan hitta i FoodSwipe.
+    </p>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Namn</label>
-          <input
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </div>
+    <form className="create-recipe-form" onSubmit={handleSubmit}>
+      <div className="form-group">
+        <label htmlFor="name">Namn</label>
+        <input
+          id="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+      </div>
 
-        <div>
-          <label htmlFor="description">Beskrivning</label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-        </div>
+      <div className="form-group">
+        <label htmlFor="description">Beskrivning</label>
+        <textarea
+          id="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        />
+      </div>
 
-        <div>
+      <div className="form-row">
+        <div className="form-group">
           <label htmlFor="recipeType">Typ</label>
           <select
             id="recipeType"
@@ -79,7 +85,7 @@ export default function CreateRecipePage() {
           </select>
         </div>
 
-        <div>
+        <div className="form-group">
           <label htmlFor="costType">Kostnad</label>
           <select
             id="costType"
@@ -93,13 +99,15 @@ export default function CreateRecipePage() {
             <option value={CostType.Expensive}>Dyrt</option>
           </select>
         </div>
+      </div>
 
-        <button disabled={loading}>
-          {loading ? "Skapar..." : "Skapa recept"}
-        </button>
-      </form>
+      <button className="primary-button" disabled={loading}>
+        {loading ? "Skapar..." : "Skapa recept"}
+      </button>
+    </form>
 
-      {message && <p>{message}</p>}
-    </main>
+    {message && <p className="form-message">{message}</p>}
+  </section>
+</main>
   );
 }

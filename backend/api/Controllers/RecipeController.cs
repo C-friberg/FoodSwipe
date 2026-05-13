@@ -1,16 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using api.Dtos;
 using api.Enums;
 using api.Interfaces;
 using api.Mappers;
 using api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/recipe")]
     public class RecipeController : ControllerBase
@@ -45,9 +48,13 @@ namespace api.Controllers
             }
             var recipeModel = recipeDto.ToRecipeFromCreateDto();
 
-            // Ta bort när vi har JWT i framtiden.
-            recipeModel.CreatedByUserId = "testuser";
 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId == null)
+                return Unauthorized();
+
+            recipeModel.CreatedByUserId = userId;
             recipeModel.AverageRating = null;
             recipeModel.RatingCount = 0;
             recipeModel.BayesianScore = 3.5m;
@@ -65,8 +72,10 @@ namespace api.Controllers
             if (limit > 50)
                 limit = 50;
 
-            // Tills vi har JWT
-            var userId = "testuser";
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId == null)
+                return Unauthorized();
 
             var recipes = await _recipeRepo.GetFeedAsync(userId, recipeType, limit);
 
@@ -86,8 +95,10 @@ namespace api.Controllers
             if (recipe == null)
                 return NotFound("Receptet hittades inte.");
 
-            // Tills riktig JWT
-            var userId = "testuser";
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId == null)
+                return Unauthorized();
 
             var existingInteraction = await _recipeRepo.GetUserInteractionAsync(
                 userId,
@@ -127,8 +138,10 @@ namespace api.Controllers
             if (rateDto.RatingValue < 1 || rateDto.RatingValue > 5)
                 return BadRequest("Rating måste vara mellan 1 och 5.");
 
-            // Byt när vi kör JWT
-            var userId = "testuser";
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId == null)
+                return Unauthorized();
 
             var existingRating = await _recipeRepo.GetUserInteractionAsync(
                 userId,
@@ -187,6 +200,22 @@ namespace api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId == null)
+                return Unauthorized();
+
+            var existingRecipe = await _recipeRepo.GetByIdAsync(id);
+
+            if (existingRecipe == null)
+                return NotFound();
+
+            var isOwner = existingRecipe.CreatedByUserId == userId;
+            var isAdmin = User.IsInRole("Admin");
+
+            if (!isOwner && !isAdmin)
+                return Forbid();
+
             var recipeModel = recipeDto.ToRecipeFromCreateDto();
 
             var updatedRecipe = await _recipeRepo.UpdateAsync(id, recipeModel);
@@ -200,10 +229,23 @@ namespace api.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var deletedRecipe = await _recipeRepo.DeleteAsync(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (deletedRecipe == null)
+            if (userId == null)
+                return Unauthorized();
+
+            var existingRecipe = await _recipeRepo.GetByIdAsync(id);
+
+            if (existingRecipe == null)
                 return NotFound();
+
+            var isOwner = existingRecipe.CreatedByUserId == userId;
+            var isAdmin = User.IsInRole("Admin");
+
+            if (!isOwner && !isAdmin)
+                return Forbid();
+
+            await _recipeRepo.DeleteAsync(id);
 
             return NoContent();
         }

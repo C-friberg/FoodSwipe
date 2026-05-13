@@ -1,4 +1,5 @@
 import type { Recipe } from "../types/recipe";
+import "./RecipeCard.css";
 import {recipeTypeLabels, costTypeLabels } from "../constants/recipeLabel";
 
 type Props = {
@@ -9,24 +10,28 @@ type Props = {
 
 export default function RecipeCard({ recipe, onSave, onNext }: Props) {
   return (
-    <article>
-      <h2>{recipe.name}</h2>
+    <article className="recipe-card">
+        <div className="recipe-rating-badge">
+            {recipe.averageRating !== null ? recipe.averageRating.toFixed(1) : "Ny"}
+        </div>
 
-      <p>{recipe.description}</p>
+        <div className="recipe-card-content">
+            <p className="recipe-type">{recipeTypeLabels[recipe.recipeType]}</p>
 
-      <p>{recipeTypeLabels[recipe.recipeType]}</p>
+            <h2>{recipe.name}</h2>
 
-        <p>{costTypeLabels[recipe.costType]}</p>
+            <p className="recipe-description">{recipe.description}</p>
 
-      <p>
-        Betyg:{" "}
-        {recipe.averageRating !== null
-          ? recipe.averageRating.toFixed(1)
-          : "Inga betyg ännu"}
-      </p>
+            <div className="recipe-meta">
+            <span>{costTypeLabels[recipe.costType]}</span>
+            <span>{recipe.ratingCount} betyg</span>
+            </div>
+        </div>
 
-      <button onClick={onNext}>Nästa</button>
-      <button onClick={onSave}>Spara</button>
+        <div className="recipe-actions">
+            <button onClick={onNext}>Nästa</button>
+            <button onClick={onSave}>Spara</button>
+        </div>
     </article>
   );
 }
