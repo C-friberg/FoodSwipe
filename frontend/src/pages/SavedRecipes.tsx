@@ -1,39 +1,83 @@
-//Sparade recept
-
 import { useEffect, useState } from "react";
-import type { Recipe } from "../data/recipes";
+import { getSavedRecipes, rateRecipe, removeSavedRecipe } from "../api/recipeApi";
+import type { Recipe } from "../types/recipe";
 
-const RecipesPage = () => {
-    const [savedRecipes, setSavedRecipes] = useState<Recipe[]>([])
-    useEffect(() => {
-        const storedRecipes = JSON.parse(localStorage.getItem("savedRecipes") || "[]")
-        setSavedRecipes(storedRecipes)
-    }, [])
+export default function SavedRecipes() {
 
-    if (savedRecipes.length === 0) {
-        return (
-            <div>
-                <h1>Sparade recept</h1>
-                <p>Du har inga sparade recept</p>
-            </div>
-        )
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+
+    async function fetchRecipes() {
+      try {
+        const data = await getSavedRecipes();
+        setRecipes(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     }
-    return (
-        <div>
-            <h1>Sparade recept</h1>
-            <div className="saved-recipes-list">
-                {savedRecipes.map((recipe) => (
-                    <div key={recipe.id} className="recipe-card">
-                        <img src={recipe.img} alt={recipe.title} className="recipe-img" />
-                        <h2>{recipe.title}</h2>
-                        <p>{recipe.description}</p>
-                        <p>Kalorier: {recipe.calories}</p>
-                        <p>{recipe.isVegan ? "Veganskt" : "Ej veganskt"}</p>
-                    </div>
-                ))}
-            </div>
-        </div>
-    )
+
+    fetchRecipes();
+
+  }, []);
+
+  if (loading) {
+    return <p>Laddar...</p>;
+  }
+
+  async function handleRate(recipeId: number, ratingValue: number) {
+  try {
+    const updatedRecipe = await rateRecipe(recipeId, ratingValue);
+
+    setRecipes(prev =>
+      prev.map(recipe =>
+        recipe.id === recipeId ? updatedRecipe : recipe
+      )
+    );
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-export default RecipesPage; 
+async function handleRemove(recipeId: number) {
+  try {
+
+    await removeSavedRecipe(recipeId);
+
+    setRecipes(prev =>
+      prev.filter(recipe => recipe.id !== recipeId)
+    );
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+  return (
+    <main>
+        <h1>Sparade recept</h1>
+
+        {recipes.length === 0 && <p>Du har inga sparade recept än.</p>}
+
+        {recipes.map(recipe => (
+        <div key={recipe.id}>
+            <h2>{recipe.name}</h2>
+            <p>{recipe.description}</p>
+            <p>Betyg: {recipe.averageRating ?? "Inga betyg än"}</p>
+            <button onClick={() => handleRemove(recipe.id)}>Ta bort från sparade</button>
+
+            <div>
+            {[1, 2, 3, 4, 5].map(value => (
+                <button key={value} onClick={() => handleRate(recipe.id, value)}>
+                {value}
+                </button>
+            ))}
+            </div>
+        </div>
+        ))}
+    </main>
+  );
+}

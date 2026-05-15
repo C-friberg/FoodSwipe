@@ -30,7 +30,10 @@ export default function RecipeCard({ recipe, onSave, onNext }: Props) {
 
         <div className="recipe-actions">
             <button onClick={onNext}>Nästa</button>
-            <button onClick={onSave}>Spara</button>
+            <button onClick={() => {
+              console.log("Spara klickad"); 
+              onSave();
+              }}>Spara</button>
         </div>
     </article>
   );

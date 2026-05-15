@@ -1,66 +1,88 @@
-import { useState } from "react"
-import { recipes } from "../data/recipes"
+import { useEffect, useState } from "react";
+import { getRecipeFeed, saveRecipe, swipeRecipe } from "../api/recipeApi";
+import type { Recipe } from "../types/recipe";
+import RecipeCard from "../components/RecipeCard";
 
 type SwipePageProps = {
-  setSavedCount: React.Dispatch<React.SetStateAction<number>>
-}
+  setSavedCount: React.Dispatch<React.SetStateAction<number>>;
+};
 
 const SwipePage = ({ setSavedCount }: SwipePageProps) => {
-  const [currentIndex, setCurrentIndex] = useState(0)
 
-  const currentRecipe = recipes[currentIndex]
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleNext = () => {
-    if (currentIndex < recipes.length - 1) {
-      setCurrentIndex(currentIndex + 1)
-    }
-  }
+  useEffect(() => {
 
-  const handleSave = () => {
-    const savedRecipes = JSON.parse(localStorage.getItem("savedRecipes") || "[]")
-
-    const alreadySaved = savedRecipes.find(
-      (recipe: any) => recipe.id === currentRecipe.id
-    )
-
-    if (!alreadySaved) {
-      savedRecipes.push(currentRecipe)
-      localStorage.setItem("savedRecipes", JSON.stringify(savedRecipes))
-      setSavedCount(savedRecipes.length)
+    async function fetchRecipes() {
+      try {
+        const data = await getRecipeFeed();
+        setRecipes(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     }
 
-    handleNext()
+    fetchRecipes();
+
+  }, []);
+
+async function handleSave(recipeId: number) {
+  console.log("Klickade spara:", recipeId);
+
+  try {
+    await saveRecipe(recipeId);
+
+    setRecipes(prev =>
+      prev.filter(recipe => recipe.id !== recipeId)
+    );
+
+    setSavedCount(prev => prev + 1);
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+  async function handleSkip(recipeId: number) {
+  try {
+    await swipeRecipe(recipeId, 2);
+
+    setRecipes(prev =>
+      prev.filter(recipe => recipe.id !== recipeId)
+    );
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+  if (loading) {
+    return <p>Laddar recept...</p>;
   }
 
-  if (!currentRecipe) {
+  if (recipes.length === 0) {
     return (
       <div>
         <h2>Inga fler recept just nu</h2>
-        <p>Du har gått igenom alla recept</p>
       </div>
-    )
+    );
   }
 
+  const currentRecipe = recipes[0];
+
   return (
-    <div>
-      <h1>Swipea recept</h1>
+  <div>
+    <h1>Swipea recept</h1>
 
-      <div className="recipe-card">
-        <img
-          src={currentRecipe.img}
-          alt={currentRecipe.title}
-          className="recipe-img"
-        />
-        <h2>{currentRecipe.title}</h2>
-        <p>{currentRecipe.description}</p>
-        <p>Kalorier: {currentRecipe.calories}</p>
-        <p>{currentRecipe.isVegan ? "Veganskt" : "Ej veganskt"}</p>
+    <RecipeCard
+      recipe={currentRecipe}
+      onNext={() => handleSkip(currentRecipe.id)}
+      onSave={() => handleSave(currentRecipe.id)}
+    />
+  </div>
+  );
+};
 
-        <button onClick={handleNext}>Hoppa över</button>
-        <button onClick={handleSave}>Spara</button>
-      </div>
-    </div>
-  )
-}
-
-export default SwipePage
+export default SwipePage;

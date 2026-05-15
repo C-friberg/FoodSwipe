@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerUser } from "../api/authApi";
+import { loginUser } from "../api/authApi";
 
-export default function RegisterPage() {
+export default function LoginPage() {
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -19,16 +17,19 @@ export default function RegisterPage() {
       setLoading(true);
       setMessage("");
 
-      await registerUser({
+      const data = await loginUser({
         username,
-        email,
         password,
       });
 
-      setMessage("Kontot skapades!");
-      navigate("/login");
+      localStorage.setItem("token", data.token);
+
+      window.location.href = "/";
+
+      setMessage("Du är inloggad!");
+      navigate("/");
     } catch (error) {
-      setMessage("Kunde inte skapa konto.");
+      setMessage("Fel användarnamn eller lösenord.");
     } finally {
       setLoading(false);
     }
@@ -36,7 +37,7 @@ export default function RegisterPage() {
 
   return (
     <main>
-      <h1>Skapa konto</h1>
+      <h1>Logga in</h1>
 
       <form onSubmit={handleSubmit}>
         <div>
@@ -45,16 +46,6 @@ export default function RegisterPage() {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
@@ -70,7 +61,7 @@ export default function RegisterPage() {
         </div>
 
         <button type="submit" disabled={loading}>
-          {loading ? "Skapar konto..." : "Skapa konto"}
+          {loading ? "Loggar in..." : "Logga in"}
         </button>
       </form>
 

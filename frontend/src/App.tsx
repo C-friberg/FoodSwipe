@@ -10,6 +10,10 @@ import RecipesPage from './pages/SavedRecipes'
 import { useEffect, useState } from 'react'
 import RecipeFeedPage from './pages/temp'
 import CreateRecipePage from "./pages/CreateRecipePage"
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
+import MyRecipesPage from './pages/MyRecipePage'
+import EditRecipePage from './pages/EditRecipePage'
 
 function App() {
   const [savedCount, setSavedCount] = useState(0)
@@ -22,7 +26,7 @@ function App() {
   return (
 
     <div>
-      <NavBar savedCount={savedCount} />
+      <NavBar />
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -32,6 +36,11 @@ function App() {
           <Route path="/recipes" element ={<RecipesPage />} />
           <Route path="/feed" element={<RecipeFeedPage />} />
           <Route path="/recipes/create" element={<CreateRecipePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/my-recipes" element={<MyRecipesPage />} />
+          <Route path="/recipes/edit/:id" element={<EditRecipePage />}
+/>
         </Routes>
       </main>
       <Footer />

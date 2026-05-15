@@ -63,6 +63,14 @@ namespace api.Repositories
             return await query.OrderByDescending(x => x.BayesianScore).Take(limit).ToListAsync();
         }
 
+        public async Task<List<Recipe>> GetSavedRecipesAsync(string userId)
+        {
+            return await _context.Recipes.Include(x => x.Interactions)
+                .Where(recipe => recipe.Interactions.Any(interaction =>
+                interaction.UserId == userId &&
+                interaction.ActionType == RecipeInteractionType.Saved)).ToListAsync();
+        }
+
         public async Task<RecipeInteraction?> GetUserInteractionAsync(string userId, int recipeId, RecipeInteractionType interactionType)
         {
             return await _context.RecipeInteractions.FirstOrDefaultAsync(x => x.UserId == userId && x.RecipeId == recipeId && x.ActionType == interactionType);
@@ -90,6 +98,32 @@ namespace api.Repositories
 
             await _context.SaveChangesAsync();
             return recipeInteraction;
+        }
+
+        public async Task<RecipeInteraction?> DeleteInteractionAsync(string userId, int recipeId, RecipeInteractionType interactionType)
+        {
+            var interaction = await _context.RecipeInteractions
+                .FirstOrDefaultAsync(x =>
+                    x.UserId == userId &&
+                    x.RecipeId == recipeId &&
+                    x.ActionType == interactionType);
+
+            if (interaction == null)
+                return null;
+
+            _context.RecipeInteractions.Remove(interaction);
+
+            await _context.SaveChangesAsync();
+
+            return interaction;
+        }
+
+        public async Task<List<Recipe>> GetRecipesCreatedByUserAsync(string userId)
+        {
+            return await _context.Recipes
+                .Where(x => x.CreatedByUserId == userId)
+                .OrderByDescending(x => x.CreatedAt)
+                .ToListAsync();
         }
     }
 }

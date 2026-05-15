@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { getRecipeFeed } from "../api/recipeApi";
+import {
+  getRecipeFeed,
+  saveRecipe as saveRecipeApi,
+  swipeRecipe,
+} from "../api/recipeApi";
 import type { Recipe, RecipeType } from "../types/recipe";
 
 export function useRecipeFeed(type?: RecipeType) {
@@ -15,6 +19,8 @@ export function useRecipeFeed(type?: RecipeType) {
     async function loadRecipes() {
       try {
         setLoading(true);
+        setError(null);
+
         const data = await getRecipeFeed(type);
         setRecipes(data);
         setCurrentIndex(0);
@@ -28,15 +34,20 @@ export function useRecipeFeed(type?: RecipeType) {
     loadRecipes();
   }, [type]);
 
-  function nextRecipe() {
+  async function nextRecipe() {
+    if (!currentRecipe) return;
+
+    await swipeRecipe(currentRecipe.id, 2); // SwipedNo = 2
     setCurrentIndex((prev) => prev + 1);
   }
 
-  function saveRecipe() {
+  async function saveRecipe() {
     if (!currentRecipe) return;
 
+    await saveRecipeApi(currentRecipe.id);
+
     setSavedRecipes((prev) => [...prev, currentRecipe]);
-    nextRecipe();
+    setCurrentIndex((prev) => prev + 1);
   }
 
   return {

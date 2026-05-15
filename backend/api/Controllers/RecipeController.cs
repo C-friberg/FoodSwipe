@@ -39,6 +39,67 @@ namespace api.Controllers
             return Ok(recipe.ToRecipeDto());
         }
 
+        [HttpGet("saved")]
+        public async Task<IActionResult> GetSavedRecipes()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId == null)
+                return Unauthorized();
+
+            var recipes = await _recipeRepo.GetSavedRecipesAsync(userId);
+
+            return Ok(recipes.Select(r => r.ToRecipeDto()).ToList());
+        }
+
+        [HttpGet("created-by-me")]
+        public async Task<IActionResult> GetRecipesCreatedByMe()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId == null)
+                return Unauthorized();
+
+            var recipes = await _recipeRepo.GetRecipesCreatedByUserAsync(userId);
+
+            return Ok(recipes.Select(r => r.ToRecipeDto()).ToList());
+        }
+
+        [HttpPost("{id:int}/save")]
+        public async Task<IActionResult> SaveRecipe([FromRoute] int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId == null)
+                return Unauthorized();
+
+            var recipe = await _recipeRepo.GetByIdAsync(id);
+
+            if (recipe == null)
+                return NotFound("Receptet hittades inte.");
+
+            var existingSave = await _recipeRepo.GetUserInteractionAsync(
+                userId,
+                id,
+                RecipeInteractionType.Saved
+            );
+
+            if (existingSave != null)
+                return BadRequest("Receptet är redan sparat.");
+
+            var interaction = new RecipeInteraction
+            {
+                UserId = userId,
+                RecipeId = id,
+                ActionType = RecipeInteractionType.Saved,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            await _recipeRepo.AddInteractionAsync(interaction);
+
+            return Ok("Recept sparat.");
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateRecipeDto recipeDto)
         {
@@ -246,6 +307,26 @@ namespace api.Controllers
                 return Forbid();
 
             await _recipeRepo.DeleteAsync(id);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id:int}/save")]
+        public async Task<IActionResult> RemoveSavedRecipe([FromRoute] int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId == null)
+                return Unauthorized();
+
+            var deletedInteraction = await _recipeRepo.DeleteInteractionAsync(
+                userId,
+                id,
+                RecipeInteractionType.Saved
+            );
+
+            if (deletedInteraction == null)
+                return NotFound("Sparat recept hittades inte.");
 
             return NoContent();
         }

@@ -17,6 +17,8 @@ namespace api.Interfaces
         Task<RecipeInteraction> AddInteractionAsync(RecipeInteraction recipeInteraction);
         Task<RecipeInteraction?> GetUserInteractionAsync(string userId, int recipeId, RecipeInteractionType interactionType);
         Task<RecipeInteraction> UpdateRecipeInteractionAsync(RecipeInteraction recipeInteraction);
-
+        Task<List<Recipe>> GetSavedRecipesAsync(string userId);
+        Task<RecipeInteraction?> DeleteInteractionAsync(string userId, int recipeId, RecipeInteractionType interactionType);
+        Task<List<Recipe>> GetRecipesCreatedByUserAsync(string userId);
     }
 }
