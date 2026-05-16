@@ -16,6 +16,7 @@ export type CreateRecipeRequest = {
   description: string;
   recipeType: RecipeType;
   costType: CostType;
+  imageUrl: string | null; 
 };
 
 export async function getRecipeFeed(recipeType?: RecipeType, limit: number = 10): Promise<Recipe[]> {

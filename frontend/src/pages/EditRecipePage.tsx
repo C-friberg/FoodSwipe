@@ -12,19 +12,13 @@ import {
 } from "../types/recipe";
 
 export default function EditRecipePage() {
-
   const { id } = useParams();
-
   const navigate = useNavigate();
-
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-
-  const [recipeType, setRecipeType] =
-    useState<RecipeType>(RecipeType.Meat);
-
-  const [costType, setCostType] =
-    useState<CostType>(CostType.Cheap);
+  const [recipeType, setRecipeType] = useState<RecipeType>(RecipeType.Meat);
+  const [costType, setCostType] = useState<CostType>(CostType.Cheap);
+  const [imageUrl, setImageUrl] = useState("");
 
   const [loading, setLoading] = useState(true);
 
@@ -40,6 +34,7 @@ export default function EditRecipePage() {
 
         setName(recipe.name);
         setDescription(recipe.description);
+        setImageUrl(recipe.imageUrl ?? "");
         setRecipeType(recipe.recipeType);
         setCostType(recipe.costType);
 
@@ -68,6 +63,7 @@ export default function EditRecipePage() {
         description,
         recipeType,
         costType,
+        imageUrl: imageUrl || null
       });
 
       navigate("/my-recipes");
@@ -101,6 +97,15 @@ export default function EditRecipePage() {
           onChange={(e) =>
             setDescription(e.target.value)
           }
+        />
+
+        <label htmlFor="imageUrl">Bildlänk</label>
+        <input
+          id="imageUrl"
+          type="url"
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+          placeholder="https://example.com/bild.jpg"
         />
 
         <select

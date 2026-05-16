@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getMyCreatedRecipes, deleteRecipe } from "../api/recipeApi";
 import type { Recipe } from "../types/recipe";
 import { Link } from "react-router-dom";
+import "./MyRecipePage.css";
 
 export default function MyRecipesPage() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -49,30 +50,71 @@ export default function MyRecipesPage() {
   }
 
   return (
-    <main>
-      <h1>Mina skapade recept</h1>
+  <main className="my-recipes-page">
 
-      {recipes.length === 0 && (
-        <p>Du har inte skapat några recept än.</p>
-      )}
+    <h1>Mina skapade recept</h1>
+
+    {recipes.length === 0 && (
+      <p>Du har inte skapat några recept än.</p>
+    )}
+
+    <section className="my-recipes-grid">
 
       {recipes.map((recipe) => (
-        <article key={recipe.id} className="recipe-card">
-          <h2>{recipe.name}</h2>
-          <p>{recipe.description}</p>
-          <p>Betyg: {recipe.averageRating ?? "Inga betyg än"}</p>
 
-          <div>
-            <Link to={`/recipes/edit/${recipe.id}`}>
-              Redigera
-            </Link>
+        <article key={recipe.id} className="my-recipe-card">
 
-            <button onClick={() => handleDelete(recipe.id)}>
-              Ta bort
-            </button>
+          {recipe.imageUrl && (
+            <img
+              src={recipe.imageUrl}
+              alt={recipe.name}
+              className="my-recipe-img"
+            />
+          )}
+
+          <div className="my-recipe-content">
+
+            <h2>{recipe.name}</h2>
+
+            <p className="my-recipe-description">
+              {recipe.description}
+            </p>
+
+            <p className="my-recipe-rating">
+              Betyg:{" "}
+              <strong>
+                {recipe.averageRating != null
+                  ? recipe.averageRating.toFixed(1)
+                  : "Inga betyg än"}
+              </strong>
+            </p>
+
+            <div className="my-recipe-actions">
+
+              <Link
+                to={`/recipes/edit/${recipe.id}`}
+                className="edit-button"
+              >
+                Redigera
+              </Link>
+
+              <button
+                className="delete-button"
+                onClick={() => handleDelete(recipe.id)}
+              >
+                Ta bort
+              </button>
+
+            </div>
+
           </div>
+
         </article>
+
       ))}
-    </main>
-  );
+
+    </section>
+
+  </main>
+);
 }

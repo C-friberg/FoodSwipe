@@ -11,6 +11,13 @@ type Props = {
 export default function RecipeCard({ recipe, onSave, onNext }: Props) {
   return (
     <article className="recipe-card">
+        {recipe.imageUrl && (
+        <img
+          src={recipe.imageUrl}
+          alt={recipe.name}
+          className="recipe-img"
+        />
+  )}
         <div className="recipe-rating-badge">
             {recipe.averageRating !== null ? recipe.averageRating.toFixed(1) : "Ny"}
         </div>
@@ -29,11 +36,19 @@ export default function RecipeCard({ recipe, onSave, onNext }: Props) {
         </div>
 
         <div className="recipe-actions">
-            <button onClick={onNext}>Nästa</button>
-            <button onClick={() => {
-              console.log("Spara klickad"); 
-              onSave();
-              }}>Spara</button>
+
+          <button
+            className="swipe-btn swipe-no"
+            onClick={onNext}>
+            ✕
+          </button>
+
+          <button
+            className="swipe-btn swipe-yes"
+            onClick={onSave}>
+            ✓
+          </button>
+
         </div>
     </article>
   );

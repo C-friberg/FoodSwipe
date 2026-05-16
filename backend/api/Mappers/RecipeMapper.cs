@@ -16,6 +16,7 @@ namespace api.Mappers
                 Id = recipeModel.Id,
                 Name = recipeModel.Name,
                 Description = recipeModel.Description,
+                ImageUrl = recipeModel.ImageUrl,
                 CostType = recipeModel.CostType,
                 RecipeType = recipeModel.RecipeType,
                 CreatedByUserId = recipeModel.CreatedByUserId,
@@ -32,6 +33,7 @@ namespace api.Mappers
             {
                 Name = recipeDto.Name,
                 Description = recipeDto.Description,
+                ImageUrl = recipeDto.ImageUrl,
                 CostType = recipeDto.CostType,
                 RecipeType = recipeDto.RecipeType
             };

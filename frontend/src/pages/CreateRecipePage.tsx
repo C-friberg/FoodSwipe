@@ -11,6 +11,7 @@ export default function CreateRecipePage() {
   const [costType, setCostType] = useState<CostTypeValue>(CostType.Cheap);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -24,10 +25,12 @@ export default function CreateRecipePage() {
         description,
         recipeType,
         costType,
+        imageUrl: imageUrl || null,
       });
 
       setName("");
       setDescription("");
+      setImageUrl(""); 
       setRecipeType(RecipeType.Meat);
       setCostType(CostType.Cheap);
 
@@ -65,6 +68,17 @@ export default function CreateRecipePage() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="imageUrl">Bildlänk</label>
+        <input
+          id="imageUrl"
+          type="url"
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+          placeholder="https://example.com/bild.jpg"
         />
       </div>
 

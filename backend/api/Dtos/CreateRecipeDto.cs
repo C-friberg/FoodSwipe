@@ -17,6 +17,7 @@ namespace api.Dtos
         [MinLength(10, ErrorMessage = "Beskrivningen för receptet är för kort.")]
         [MaxLength(2000, ErrorMessage = "Beskrivning är för lång, håll det till 2000 tecken.")]
         public string Description { get; set; } = string.Empty;
+        public string? ImageUrl { get; set; }
         [Required]
         public CostType CostType { get; set; }
         [Required]

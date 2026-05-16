@@ -86,6 +86,7 @@ namespace api.Repositories
             existingRecipe.Name = recipeModel.Name;
             existingRecipe.Description = recipeModel.Description;
             existingRecipe.CostType = recipeModel.CostType;
+            existingRecipe.ImageUrl = recipeModel.ImageUrl;
             existingRecipe.RecipeType = recipeModel.RecipeType;
 
             await _context.SaveChangesAsync();

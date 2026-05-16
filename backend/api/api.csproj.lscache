@@ -77,6 +77,8 @@ Migrations/
  20260506112053_InitialCreate.Designer.cs
  20260513090618_IdentityRoles.cs
  20260513090618_IdentityRoles.Designer.cs
+ 20260515190131_AddImageUrlToRecipe.cs
+ 20260515190131_AddImageUrlToRecipe.Designer.cs
  AppDbContextModelSnapshot.cs
 Models/
  Recipe.cs

@@ -14,13 +14,13 @@ const NavBar = () => {
         <header>
             <nav>
                 <Link to="/">Hem</Link>
-                <Link to="/about">Beskrivning</Link>
-                <Link to="/contact">Kontakt</Link>
+                {/* <Link to="/about">Beskrivning</Link>
+                <Link to="/contact">Kontakt</Link> */}
 
                 {isLoggedIn && (
                     <>
                         <Link to="/feed">Swipe</Link>
-                        <Link to="/recipes">Sparade recept </Link>
+                        <Link to="/recipes">Matchningar </Link>
                         <Link to="/recipes/create">Skapa recept</Link>
                         <Link to="/my-recipes">Skapade recept</Link>
 

@@ -19,6 +19,7 @@ export type Recipe = {
   id: number;
   name: string;
   description: string;
+  imageUrl?: string | null; 
   recipeType: RecipeType;
   costType: CostType;
   averageRating: number | null;

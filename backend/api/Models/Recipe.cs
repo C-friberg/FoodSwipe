@@ -15,6 +15,7 @@ namespace api.Models
         public RecipeType RecipeType { get; set; }
         public string CreatedByUserId { get; set; } = string.Empty;
         public decimal? AverageRating { get; set; }
+        public string? ImageUrl { get; set; }
         public int RatingCount { get; set; }
         public decimal BayesianScore { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

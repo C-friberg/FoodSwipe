@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { getSavedRecipes, rateRecipe, removeSavedRecipe } from "../api/recipeApi";
 import type { Recipe } from "../types/recipe";
+import "./SavedRecipes.css";
 
 export default function SavedRecipes() {
 
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeRatingId, setActiveRatingId] = useState<number | null>(null);
 
   useEffect(() => {
 
@@ -57,27 +59,75 @@ async function handleRemove(recipeId: number) {
 }
 
   return (
-    <main>
-        <h1>Sparade recept</h1>
+  <main className="saved-page">
+    <h1>Sparade recept</h1>
 
-        {recipes.length === 0 && <p>Du har inga sparade recept än.</p>}
+    {recipes.length === 0 && <p>Du har inga sparade recept än.</p>}
 
-        {recipes.map(recipe => (
-        <div key={recipe.id}>
+    <section className="saved-grid">
+      {recipes.map((recipe) => (
+        <article key={recipe.id} className="saved-card">
+          {recipe.imageUrl && (
+            <img
+              src={recipe.imageUrl}
+              alt={recipe.name}
+              className="saved-card-img"
+            />
+          )}
+
+          <div className="saved-card-content">
             <h2>{recipe.name}</h2>
-            <p>{recipe.description}</p>
-            <p>Betyg: {recipe.averageRating ?? "Inga betyg än"}</p>
-            <button onClick={() => handleRemove(recipe.id)}>Ta bort från sparade</button>
+            <p className="saved-description">{recipe.description}</p>
 
-            <div>
-            {[1, 2, 3, 4, 5].map(value => (
-                <button key={value} onClick={() => handleRate(recipe.id, value)}>
-                {value}
-                </button>
-            ))}
-            </div>
-        </div>
-        ))}
-    </main>
-  );
+            <p className="saved-rating">
+              Betyg:{" "}
+              <strong>
+                {recipe.averageRating != null
+                  ? `${recipe.averageRating.toFixed(1)} ⭐`
+                  : "Inga betyg än"}
+              </strong>
+            </p>
+
+            <div className="rating-section">
+
+  {activeRatingId === recipe.id ? (
+
+    <div className="rating-buttons">
+      {[1, 2, 3, 4, 5].map((value) => (
+        <button
+          key={value}
+          onClick={() => {
+            handleRate(recipe.id, value);
+            setActiveRatingId(null);
+          }}
+        >
+          {value}
+        </button>
+      ))}
+    </div>
+
+  ) : (
+
+    <button
+      onClick={() => setActiveRatingId(recipe.id)}
+    >
+      Betygsätt
+    </button>
+
+  )}
+
+</div>
+
+            <button
+              className="remove-button"
+              onClick={() => handleRemove(recipe.id)}
+            >
+              Ta bort från sparade
+            </button>
+          </div>
+        </article>
+      ))}
+    </section>
+  </main>
+);
 }

@@ -13,6 +13,7 @@ namespace api.Dtos
         public string Description { get; set; } = string.Empty;
         public CostType CostType { get; set; }
         public RecipeType RecipeType {get; set;}
+        public string? ImageUrl {get; set;}
         public string CreatedByUserId {get; set;} = string.Empty;
         public decimal? AverageRating { get; set; }
         public int RatingCount { get; set; }
