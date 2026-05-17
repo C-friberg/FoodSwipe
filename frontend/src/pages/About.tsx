@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Summary from "./Summary";
+import Summary from "../components/Summary";
 
 const figmaLink = "https://www.figma.com/make/MVlUsbZA5MBzbRQ8Cw9mRs/FoodSwipe-Landing-Page?t=q3jHjg6VTxvRQonV-20&fullscreen=1";  
 
