@@ -1,6 +1,7 @@
 import type { Recipe } from "../types/recipe";
-import "./RecipeCard.css";
 import {recipeTypeLabels, costTypeLabels } from "../constants/recipeLabel";
+import { motion } from "framer-motion";
+import "./RecipeCard.css";
 
 type Props = {
   recipe: Recipe;
@@ -10,7 +11,21 @@ type Props = {
 
 export default function RecipeCard({ recipe, onSave, onNext }: Props) {
   return (
-    <article className="recipe-card">
+    <motion.article
+      className="recipe-card"
+      drag="x"
+      dragConstraints={{ left: 0, right: 0 }}
+      whileDrag={{ scale: 1.03, rotate: 3 }}
+      onDragEnd={(_, info) => {
+        if (info.offset.x > 120) {
+          onSave();
+        }
+
+        if (info.offset.x < -120) {
+          onNext();
+        }
+      }}
+    >
         {recipe.imageUrl && (
         <img
           src={recipe.imageUrl}
@@ -50,6 +65,6 @@ export default function RecipeCard({ recipe, onSave, onNext }: Props) {
           </button>
 
         </div>
-    </article>
+    </motion.article>
   );
 }
