@@ -16,10 +16,49 @@ För att starta denna sida, se till så du navigerar till mappen "FoodSwipe", ob
 Just nu finns det bara information om projektet. Men jag kommer uppdatera denna texten under projektets gång om fler instruktioner behövs gå igenom.
 
 OBS 2026-04-10
-Den aktuella koden ligger på branch swipefeature så för att starta koden, se till så att hämta koden från branch "swipefeature". Resten av stegen är demsamma. 
+Den aktuella koden ligger på branch swipefeature så för att starta koden, se till så att hämta koden från branch "swipefeature". Resten av stegen är demsamma.
 
 ---
 
 Deployad version finns här:
 
 Länk till digitalocean app: https://foodswipe-app-eb5y8.ondigitalocean.app/
+
+Hur hänger frontend och backend ihop?
+
+Projektet består av React i frontend, och ett Web Api byggt med ASP .NET.
+
+Frontend ansvarar för användargränssnittet, till exempel login, receptkort, swipe-funktion, sparade recept och formulär för att skapa/redigera recept.
+
+Backend ansvarar för datalagring, autentisering, recept logik och interaktioner. Frontend kommunicerar med backend via HTTP fetch anrop.
+
+Exempel:
+
+- POST /api/account/login loggar in användaren och returnerar en JWT-token.
+- GET /api/recipe/feed hämtar receptflödet.
+- POST /api/recipe/{id}/save sparar ett recept.
+- POST /api/recipe/{id}/rate betygsätter ett recept.
+- POST /api/recipe skapar ett nytt recept.
+
+När användaren är inloggad sparas JWT-token i localStorage och skickas med i API-anrop via 'Authorization: Bearer <token>'.
+
+Hur startas backend? Vilka portar skall användas för frontend som backend samt databas?
+
+Navigera till cd foodswipe/frontend, kör 'npm install' för att hämta paketen som tillhör. 
+
+Starta frontend med 'npm run dev', och shift + click (alternativt kopiera in: http://localhost:5173/) i webbläsaren. 
+
+Starta även backend genom att navigera till cd foodswipe/backend/api.
+Starta igång genom att skriva in 'dotnet run' i terminalen. 
+Backend kommer köras på http://localhost:5143 när backend är igång. 
+
+Jag har använt mig av SQL server i programmet, så för att koppla till databasen så kan du kopiera följande över '"Logging": {/* koden som är här i */}' :  
+
+ "ConnectionStrings": {
+    "DefaultConnection": "Server=DITT-NAMN-HÄR\\SQLEXPRESS;Database=FoodSwipe;Trusted_Connection=True;TrustServerCertificate=True"
+
+  },
+
+  I t.ex SQL Server Management Studio så skapar du en ny databas genom att högerklicka på Databses -> 
+  New Database -> Välj ett namn, t.ex FoodSwipe", Byt ut "DITT-NAMN-HÄR" mot din dators namn. 
+  Sedan kan du köra migrations: "dotnet ef database update". 

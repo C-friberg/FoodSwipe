@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import "./EditRecipePage.css";
 
 import {
   getRecipeById,
@@ -78,84 +79,139 @@ export default function EditRecipePage() {
   }
 
   return (
-    <main>
+  <main className="edit-recipe-page">
+
+    <section className="edit-recipe-card">
 
       <h1>Redigera recept</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form
+        className="edit-recipe-form"
+        onSubmit={handleSubmit}
+      >
 
-        <input
-          type="text"
-          value={name}
-          onChange={(e) =>
-            setName(e.target.value)
-          }
-        />
+        <div className="form-group">
 
-        <textarea
-          value={description}
-          onChange={(e) =>
-            setDescription(e.target.value)
-          }
-        />
+          <label>Namn</label>
 
-        <label htmlFor="imageUrl">Bildlänk</label>
-        <input
-          id="imageUrl"
-          type="url"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-          placeholder="https://example.com/bild.jpg"
-        />
+          <input
+            type="text"
+            value={name}
+            onChange={(e) =>
+              setName(e.target.value)
+            }
+          />
 
-        <select
-          value={recipeType}
-          onChange={(e) =>
-            setRecipeType(Number(e.target.value) as RecipeType)
-          }
+        </div>
+
+        <div className="form-group">
+
+          <label>Beskrivning</label>
+
+          <textarea
+            value={description}
+            onChange={(e) =>
+              setDescription(e.target.value)
+            }
+          />
+
+        </div>
+
+        <div className="form-group">
+
+          <label htmlFor="imageUrl">
+            Bildlänk
+          </label>
+
+          <input
+            id="imageUrl"
+            type="url"
+            value={imageUrl}
+            onChange={(e) =>
+              setImageUrl(e.target.value)
+            }
+            placeholder="https://example.com/bild.jpg"
+          />
+
+        </div>
+
+        {imageUrl && (
+          <img
+            src={imageUrl}
+            alt="Preview"
+            className="edit-image-preview"
+          />
+        )}
+
+        <div className="form-row">
+
+          <div className="form-group">
+
+            <label>Typ</label>
+
+            <select
+              value={recipeType}
+              onChange={(e) =>
+                setRecipeType(Number(e.target.value) as RecipeType)
+              }
+            >
+              <option value={RecipeType.Meat}>
+                Meat
+              </option>
+
+              <option value={RecipeType.Fish}>
+                Fish
+              </option>
+
+              <option value={RecipeType.Vegetarian}>
+                Vegetarian
+              </option>
+
+              <option value={RecipeType.Vegan}>
+                Vegan
+              </option>
+            </select>
+
+          </div>
+
+          <div className="form-group">
+
+            <label>Kostnad</label>
+
+            <select
+              value={costType}
+              onChange={(e) =>
+                setCostType(Number(e.target.value) as CostType)
+              }
+            >
+              <option value={CostType.Cheap}>
+                Cheap
+              </option>
+
+              <option value={CostType.Medium}>
+                Medium
+              </option>
+
+              <option value={CostType.Expensive}>
+                Expensive
+              </option>
+            </select>
+
+          </div>
+
+        </div>
+
+        <button
+          className="update-button"
+          type="submit"
         >
-          <option value={RecipeType.Meat}>
-            Meat
-          </option>
-
-          <option value={RecipeType.Fish}>
-            Fish
-          </option>
-
-          <option value={RecipeType.Vegetarian}>
-            Vegetarian
-          </option>
-
-          <option value={RecipeType.Vegan}>
-            Vegan
-          </option>
-        </select>
-
-        <select
-          value={costType}
-          onChange={(e) =>
-            setCostType(Number(e.target.value) as CostType)
-          }
-        >
-          <option value={CostType.Cheap}>
-            Cheap
-          </option>
-
-          <option value={CostType.Medium}>
-            Medium
-          </option>
-
-          <option value={CostType.Expensive}>
-            Expensive
-          </option>
-        </select>
-
-        <button type="submit">
           Uppdatera recept
         </button>
 
       </form>
 
-    </main>
-  );
+    </section>
+
+  </main>
+);
 }
