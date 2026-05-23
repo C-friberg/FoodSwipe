@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../api/authApi";
+import "./LoginPage.css";
 
 export default function RegisterPage() {
   const [username, setUsername] = useState("");
@@ -35,46 +36,86 @@ export default function RegisterPage() {
   }
 
   return (
-    <main>
+  <main className="auth-page">
+
+    <section className="auth-card">
+
       <h1>Skapa konto</h1>
 
-      <form onSubmit={handleSubmit}>
-        <div>
+      <p className="auth-subtitle">
+        Skapa ett konto för att börja swipea recept
+      </p>
+
+      <form
+        className="auth-form"
+        onSubmit={handleSubmit}
+      >
+
+        <div className="form-group">
+
           <label>Användarnamn</label>
+
           <input
             type="text"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) =>
+              setUsername(e.target.value)
+            }
             required
           />
+
         </div>
 
-        <div>
+        <div className="form-group">
+
           <label>Email</label>
+
           <input
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) =>
+              setEmail(e.target.value)
+            }
             required
           />
+
         </div>
 
-        <div>
+        <div className="form-group">
+
           <label>Lösenord</label>
+
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
             required
           />
+
         </div>
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Skapar konto..." : "Skapa konto"}
+        <button
+          className="auth-button"
+          type="submit"
+          disabled={loading}
+        >
+          {loading
+            ? "Skapar konto..."
+            : "Skapa konto"}
         </button>
+
       </form>
 
-      {message && <p>{message}</p>}
-    </main>
-  );
+      {message && (
+        <p className="auth-message">
+          {message}
+        </p>
+      )}
+
+    </section>
+
+  </main>
+);
 }

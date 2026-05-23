@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../api/authApi";
+import "./LoginPage.css";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -36,36 +37,71 @@ export default function LoginPage() {
   }
 
   return (
-    <main>
+  <main className="auth-page">
+
+    <section className="auth-card">
+
       <h1>Logga in</h1>
 
-      <form onSubmit={handleSubmit}>
-        <div>
+      <p className="auth-subtitle">
+        Välkommen tillbaka till FoodSwipe
+      </p>
+
+      <form
+        className="auth-form"
+        onSubmit={handleSubmit}
+      >
+
+        <div className="form-group">
+
           <label>Användarnamn</label>
+
           <input
             type="text"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) =>
+              setUsername(e.target.value)
+            }
             required
           />
+
         </div>
 
-        <div>
+        <div className="form-group">
+
           <label>Lösenord</label>
+
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
             required
           />
+
         </div>
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Loggar in..." : "Logga in"}
+        <button
+          className="auth-button"
+          type="submit"
+          disabled={loading}
+        >
+          {loading
+            ? "Loggar in..."
+            : "Logga in"}
         </button>
+
       </form>
 
-      {message && <p>{message}</p>}
-    </main>
-  );
+      {message && (
+        <p className="auth-message">
+          {message}
+        </p>
+      )}
+
+    </section>
+
+  </main>
+);
 }
