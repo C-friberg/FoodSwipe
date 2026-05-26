@@ -2,6 +2,7 @@ import type { Recipe } from "../types/recipe";
 import {recipeTypeLabels, costTypeLabels } from "../constants/recipeLabel";
 import { motion } from "framer-motion";
 import "./RecipeCard.css";
+import ErrorBoundary from "./ErrorBoundry";
 
 type Props = {
   recipe: Recipe;
@@ -10,6 +11,7 @@ type Props = {
 };
 
 export default function RecipeCard({ recipe, onSave, onNext }: Props) {
+  /* throw new Error("Test error boundary"); */
   return (
     <motion.article
       className="recipe-card"
