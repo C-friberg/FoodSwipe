@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../api/authApi";
 import "./LoginPage.css";
+import Button from "../components/Button";
 
 export default function RegisterPage() {
   const [username, setUsername] = useState("");
@@ -96,15 +97,7 @@ export default function RegisterPage() {
 
         </div>
 
-        <button
-          className="auth-button"
-          type="submit"
-          disabled={loading}
-        >
-          {loading
-            ? "Skapar konto..."
-            : "Skapa konto"}
-        </button>
+        <Button type="submit" loading={loading}> Registrera </Button>
 
       </form>
 

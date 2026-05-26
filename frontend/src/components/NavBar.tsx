@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import Button from "./Button";
 
 const NavBar = () => {
   const { isLoggedIn, logout } = useAuth();
@@ -22,7 +23,7 @@ const NavBar = () => {
             <Link to="/recipes/create">Skapa recept</Link>
             <Link to="/my-recipes">Skapade recept</Link>
 
-            <button onClick={handleLogout}>Logga ut</button>
+            <Button variant="secondary" onClick={handleLogout}>Logga ut</Button>
           </>
         )}
 

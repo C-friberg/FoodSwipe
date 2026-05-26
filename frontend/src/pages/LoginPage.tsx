@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { loginUser } from "../api/authApi";
 import "./LoginPage.css";
 import { useAuth } from "../context/AuthContext";
+import Button from "../components/Button";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -81,16 +82,8 @@ export default function LoginPage() {
           />
 
         </div>
-
-        <button
-          className="auth-button"
-          type="submit"
-          disabled={loading}
-        >
-          {loading
-            ? "Loggar in..."
-            : "Logga in"}
-        </button>
+        
+        <Button type="submit" loading={loading}> Logga in </Button>
 
       </form>
 
