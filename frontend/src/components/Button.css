@@ -1,0 +1,37 @@
+.custom-button {
+  border: none;
+
+  padding: 0.9rem 1.4rem;
+
+  border-radius: 999px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.custom-button:hover {
+  transform: translateY(-2px);
+}
+
+.custom-button.primary {
+  background: #111827;
+  color: white;
+}
+
+.custom-button.danger {
+  background: #dc2626;
+  color: white;
+}
+
+.custom-button.secondary {
+  background: #e5e7eb;
+  color: black;
+}
+
+.custom-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

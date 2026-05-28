@@ -3,6 +3,7 @@ import { getMyCreatedRecipes, deleteRecipe } from "../api/recipeApi";
 import type { Recipe } from "../types/recipe";
 import { Link } from "react-router-dom";
 import "./MyRecipePage.css";
+import Button from "../components/Button";
 
 export default function MyRecipesPage() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -98,12 +99,7 @@ export default function MyRecipesPage() {
                 Redigera
               </Link>
 
-              <button
-                className="delete-button"
-                onClick={() => handleDelete(recipe.id)}
-              >
-                Ta bort
-              </button>
+              <Button variant="danger" onClick={() => handleDelete(recipe.id)}>Ta bort</Button>
 
             </div>
 

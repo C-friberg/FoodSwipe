@@ -2,12 +2,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../api/authApi";
 import "./LoginPage.css";
+import { useAuth } from "../context/AuthContext";
+import Button from "../components/Button";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
 
   const navigate = useNavigate();
 
@@ -23,12 +26,10 @@ export default function LoginPage() {
         password,
       });
 
-      localStorage.setItem("token", data.token);
-
-      window.location.href = "/";
-
-      setMessage("Du är inloggad!");
+      /* localStorage.setItem("token", data.token); */
+      login(data.token); 
       navigate("/");
+
     } catch (error) {
       setMessage("Fel användarnamn eller lösenord.");
     } finally {
@@ -81,16 +82,8 @@ export default function LoginPage() {
           />
 
         </div>
-
-        <button
-          className="auth-button"
-          type="submit"
-          disabled={loading}
-        >
-          {loading
-            ? "Loggar in..."
-            : "Logga in"}
-        </button>
+        
+        <Button type="submit" loading={loading}> Logga in </Button>
 
       </form>
 
